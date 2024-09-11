@@ -8,6 +8,7 @@
 
 
 <br>
+
 ## 下载地址 
 
 **Github**
@@ -15,13 +16,13 @@
 > https://github.com/Just-Hack-For-Fun/IP-Recorder
 
 
-<br>
 **百度云盘**
 
 > https://pan.baidu.com/s/1oDTbTX1XWvsJ8TqSfJ46dQ?pwd=9vn7
 
 
 <br>
+
 ## 使用方法
 
 在 MacOS 中，打开程序会跳出下面的窗口，经过排查，应该是因为存储使用了 `electron-store` ，而这个库在 MacOS 上存储加密导致出现下面的提示，直接点击拒绝即可 
@@ -87,6 +88,7 @@ https://api.ipify.org/?format=json  // 使用 https://ip.taobao.com 获取IP归�
 
 
 <br>
+
 ## 手工编译
 
 如果大家希望手工编译，也非常简单，安装 `Node.js` 最新版，下载源代码，在源代码根目录执行以下命令
