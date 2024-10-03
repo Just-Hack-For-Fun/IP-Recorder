@@ -8,6 +8,22 @@
 
 
 
+## v1.1.0 版本更新日志
+
+> 2024-10-03
+>
+> 修复程序一直获取IP地址的问题，这个问题的本质是 api.ipify.org  被封了，现在提供了多种选择，且提供了配置选项
+>
+> <img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-121452.png" style="zoom:50%;" />
+>
+> Windows 平台增加了自动创建桌面快捷方式
+>
+> <img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-121534.png" style="zoom:50%;" />
+>
+> 完善了配置功能，配置代理或者选择获取IP地址信息来源后，主页面显示当前IP信息处会实时更新
+
+
+
 ## 下载地址 
 
 **Github**
@@ -37,39 +53,49 @@
 本程序记录IP地址以及IP归属地使用的接口如下
 
 ```
-https://myip.ipip.net
+https://myip.ipip.net   // 默认接口
 https://api.ipify.org/?format=json  // 使用 https://ip.taobao.com 获取IP归属地
+https://webapi-pc.meitu.com/common/ip_location
+http://demo.ip-api.com/json/?lang=zh-CN
 ```
 
-因此如果您的代理对国内外网站做了分流，可能会导致两者记录不同，此时以 `myip.ipip.net` 为准
+可以通过程序设置 -> 数据接口 进行配置
 
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-062545.png" alt="image-20240911142545455" style="zoom:50%;" />
+
 
 目前程序可设置项如下
 
 **代理设置**
 
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-062958.png" alt="image-20240911142958177" style="zoom: 50%;" />
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122448.png" alt="image-20241003202447997" style="zoom: 50%;" />
 
-每次设置代理后，1分钟内，主页面的当前IP就会刷新
+每次设置代理后，主页面的当前IP会立即刷新，记录结果会在 1 分钟内刷新
+
+
+
+**数据接口**
+
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122606.png" alt="image-20241003202605887" style="zoom:50%;" />
+
+目前第二个 (`ipify`) 被防火墙拦截，其他三个可直接使用，默认为第一个
 
 
 
 **请求设置**
 
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063245.png" alt="image-20240911143244939" style="zoom:50%;" />
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122704.png" alt="image-20241003202704519" style="zoom:50%;" />
 
 
 
 **主题模式**
 
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063314.png" alt="image-20240911143313866" style="zoom:50%;" />
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122717.png" alt="image-20241003202717574" style="zoom:50%;" />
 
 
 
 程序运行后，会有一个托盘图标，这样即使不小心关闭了主窗口，也不会导致记录中断
 
-![image-20240911143514510](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063515.png)
+![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063515.png)
 
 
 
@@ -100,7 +126,7 @@ npm run make
 
 最后一个命令执行后可能会报一个提示
 
-![image-20240911151948254](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-071948.png)
+![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-071948.png)
 
 这个错误不影响结果
 
@@ -108,5 +134,5 @@ npm run make
 
 之后在 out 目录下就生成了打包好的程序
 
-![image-20240911152158314](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-072158.png)
+![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-072158.png)
 
