@@ -1,8 +1,9 @@
 import { app, shell, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron'
+if (require('electron-squirrel-startup')) app.quit();
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require('path')
 let icon = path.join(__dirname, '../../resources/icon.png')
-const { getIPInfo, getIPByIpIpNet, testProxy } = require(
+const { getIPInfo, getIPByIpIpNet, getIPByIpify, getIPByMeitu, getIPByIPApi, testProxy, testIPSource } = require(
   path.join(__dirname, '../../src/main/ipService')
 )
 const { recordIPChange, hasHistory, deleteHistory, getIpRecord } = require(
@@ -13,8 +14,15 @@ const {
   updateProxySettings,
   updateReqSettings,
   checkReqOptions,
-  checkProxy
+  checkProxy,
+  getIPSource,
+  setIPSource
 } = require(path.join(__dirname, '../../src/main/config'))
+// const squirrelStartup = require('electron-squirrel-startup')
+
+// if (squirrelStartup) {
+//   app.quit();
+// }
 
 icon = nativeImage.createFromPath(icon)
 if (process.platform === 'darwin') {
@@ -93,15 +101,16 @@ let intervalId
 const startRecord = async () => {
   // 按下开始按钮后，先执行一次，之后再进入循环
   try {
+    let ipInfo
     if (!isPaused) {
-      let ipInfo = await getIPByIpIpNet()
+      ipInfo = await getIPInfo()
       recordIPChange(ipInfo)
     }
 
     // 进入循环执行
     intervalId = setInterval(async () => {
       if (!isPaused) {
-        let ipInfo = await getIPByIpIpNet()
+        ipInfo = await getIPInfo()
         recordIPChange(ipInfo)
       }
     }, 60 * 1000) // 每分钟检查一次当前IP
@@ -217,7 +226,7 @@ const createSettingsWindow = () => {
  * 返回值：Boolean
  * 注意事项：
  */
-const setProxy = (proxy) => {
+const setProxy = async (proxy) => {
   proxy = checkProxy(proxy)
   if (!proxy) {
     return false
@@ -287,6 +296,10 @@ const setReqOptions = (reqOptions) => {
   return true
 }
 
+// 用于通知主窗口更新当前IP地址以及归属地信息，主要用于在每次配置更改时更新信息
+const updateCurrentIPInfo = async () => mainWindow.webContents.send('update-current-info')
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -325,7 +338,11 @@ app.whenReady().then(() => {
   ipcMain.handle('open-setting-window', createSettingsWindow)
 
   ipcMain.handle('set-proxy', async (event, proxyData) => {
-    return setProxy(proxyData)
+    let result = await setProxy(proxyData)
+    if (result) {
+      updateCurrentIPInfo()
+    }
+    return result
   })
 
   ipcMain.handle('get-proxy', getProxy)
@@ -336,6 +353,7 @@ app.whenReady().then(() => {
   ipcMain.handle('get-req-options', getReqOptions)
   ipcMain.handle('set-req-options', async (event, reqOptions) => {
     return setReqOptions(reqOptions)
+    
   })
 
   ipcMain.handle('toggle-theme', (event, isDarkMode) => {
@@ -347,6 +365,19 @@ app.whenReady().then(() => {
 
   ipcMain.handle('is-dark-mode', () => isMainDarkMode)
   ipcMain.handle('get-ip-record', () => getIpRecord())
+
+  ipcMain.handle('get-ip-source', () => getIPSource() )
+  ipcMain.handle('test-ip-source', (event, ipSource) => {
+    return testIPSource(ipSource)
+  })
+
+  ipcMain.handle('set-ip-source', (event, ipSource) => {
+    let result = setIPSource(ipSource)
+    if (result) {
+      updateCurrentIPInfo()
+    }
+    return result
+  })
 
   createWindow()
 

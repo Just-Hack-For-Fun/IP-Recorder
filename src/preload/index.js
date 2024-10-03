@@ -17,6 +17,10 @@ const onThemeChange = (callback) => {
 
 const getIpRecord = () => ipcRenderer.invoke('get-ip-record')
 
+const onTriggerUpdateIP = (callback) => {
+  ipcRenderer.on('update-current-info', callback)
+}
+
 contextBridge.exposeInMainWorld('api', {
   startRecord,
   pauseRecord,
@@ -28,4 +32,5 @@ contextBridge.exposeInMainWorld('api', {
   openSettingsWindow,
   onThemeChange,
   getIpRecord,
+  onTriggerUpdateIP
 })

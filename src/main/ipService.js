@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { getSettings, checkProxy } = require('./config')
+const { getSettings, checkProxy, getIPSource } = require('./config')
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const { HttpsProxyAgent } = require('https-proxy-agent')
 const { HttpProxyAgent } = require('http-proxy-agent')
@@ -215,6 +215,68 @@ const getIPByIpify = async () => {
 }
 
 /**
+ * 功能描述：通过 webapi-pc.meitu.com 获取本机IP信息
+ * 参数说明：无
+ * 返回值：ipInfo { ip: xxx, location: xxx }
+ * 注意事项：无
+ */
+const getIPByMeitu = async () => {
+  const parseIPInfo = (data) => {
+    let ip = Object.keys(data.data)[0] || false
+    let location
+    if (ip) {
+      data = data.data || {}
+      let ipInfo = data[ip] || {}
+      let country = ipInfo.nation || 'xx'
+      let province = ipInfo.province || 'xx'
+      let city = ipInfo.city || 'xx'
+      let isp = ipInfo.isp || 'xx'
+
+      location = country + '-' + province + '-' + city + '-' + isp
+      return {
+        ip: ip,
+        location: location
+      }
+    } else {
+      return null
+    }
+  }
+
+  let ipInfo = await ipFactory('https://webapi-pc.meitu.com/common/ip_location', parseIPInfo)
+  return ipInfo
+}
+
+/**
+ * 功能描述：通过 demo.ip-api.com 获取本机IP信息
+ * 参数说明：无
+ * 返回值：ipInfo { ip: xxx, location: xxx }
+ * 注意事项：无
+ */
+const getIPByIPApi = async () => {
+  const parseIPInfo = (data) => {
+    let ip = data.query || false
+    let location
+    if (ip) {
+      // let ipInfo = data[ip] || {}
+      let country = data.country || 'xx'
+      let city = data.city || 'xx'
+      let province = data.regionName || 'xx'
+
+      location = country + '-' + province + '-' + city
+      return {
+        ip: ip,
+        location: location
+      }
+    } else {
+      return null
+    }
+  }
+
+  let ipInfo = await ipFactory('http://demo.ip-api.com/json/?lang=zh-CN', parseIPInfo)
+  return ipInfo
+}
+
+/**
  * 功能描述：测试代理可用性
  * 参数说明：proxy
     {
@@ -239,8 +301,21 @@ const testProxy = async (proxy) => {
   let retries = 0
   while (retries <= retryCount) {
     try {
-      await axios.get('https://api.ipify.org/?format=json', axiosProxy)
-      await axios.get('https://myip.ipip.net', axiosProxy)
+      let ipSource = getIPSource()
+      switch (ipSource) {
+        case 0:
+          await axios.get('https://myip.ipip.net', axiosProxy)
+          break
+        case 1:
+          await axios.get('https://api.ipify.org/?format=json', axiosProxy)
+          break
+        case 2:
+          await axios.get('https://webapi-pc.meitu.com/common/ip_location', axiosProxy)
+          break
+        case 3:
+          await axios.get('http://demo.ip-api.com/json/?lang=zh-CN', axiosProxy)
+          break
+      }
       return true
     } catch (error) {
       console.error('Error fetching IP location:', error)
@@ -261,21 +336,47 @@ const testProxy = async (proxy) => {
  * 返回值：{ ipinfo: ipInfo1, issame: false }
  * 注意事项：无
  */
-const getIPInfo = async () => {
+const getIPInfo = async (ipSource = getIPSource()) => {
   try {
-    let ipInfo1 = await getIPByIpIpNet()
-    let ipInfo2 = await getIPByIpify()
-
-    let result = { ipinfo: ipInfo1, issame: false }
-
-    if (ipInfo1.ip === ipInfo2.ip) {
-      result.issame = true
+    let ipInfo
+    switch (ipSource) {
+      case 0:
+        ipInfo = await getIPByIpIpNet()
+        break
+      case 1:
+        ipInfo = await getIPByIpify()
+        break
+      case 2: 
+        ipInfo = await getIPByMeitu()
+        break
+      case 3:
+        ipInfo = await getIPByIPApi()
+        break
     }
-
-    return result
+    return ipInfo
   } catch (error) {
     console.error('Error fetching IP location:', error)
     throw error
+  }
+}
+
+/**
+ * 功能描述：测试获取本机IP地址网站是否可用
+ * 参数说明：ipSource
+      0 -> myip.ipip.net
+      1 -> api.ipify.org
+      2 -> webapi-pc.meitu.com
+      3 -> demo.ip-api.com
+ * 返回值：Boolean
+ * 注意事项：
+ */
+const testIPSource = async (ipSource) => {
+  try {
+    await getIPInfo(ipSource)
+    return true
+  } catch (error) {
+    console.error('该获取IP来源不可用')
+    return false
   }
 }
 
@@ -283,5 +384,8 @@ module.exports = {
   getIPInfo,
   getIPByIpIpNet,
   getIPByIpify,
-  testProxy
+  getIPByMeitu,
+  getIPByIPApi,
+  testProxy,
+  testIPSource,
 }

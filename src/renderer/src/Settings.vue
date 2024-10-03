@@ -4,6 +4,7 @@ import SettingDefaultPage from './components/settings/SettingDefaultPage.vue'
 import ProxyPanel from './components/settings/ProxyPanel.vue'
 import RequestOptionsPanel from './components/settings/RequestOptionsPanel.vue'
 import DarkMode from './components/settings/DarkMode.vue'
+import IPSource from './components/settings/IPSource.vue'
 import { ref, provide, onMounted, computed } from 'vue'
 import { darkTheme } from 'naive-ui'
 
@@ -24,6 +25,9 @@ const optionClick = (key) => {
       return
     case 'dark-mode':
       currentComponent.value = DarkMode
+      return
+    case 'ip-source-setting':
+      currentComponent.value = IPSource
       return
   }
 }

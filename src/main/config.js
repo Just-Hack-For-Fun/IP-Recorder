@@ -3,13 +3,22 @@
  * 不使用代理，失败重新尝试 5 次，每次间隔 0.5 秒
  */
 
+/*
+  ipSource:
+    0 -> myip.ipip.net
+    1 -> api.ipify.org
+    2 -> webapi-pc.meitu.com
+    3 -> demo.ip-api.com
+*/
+
 let settings = {
   proxy: {
     proxyType: 'no-proxy' // no-proxy | system-proxy | custom-proxy
   },
   retryCount: 5,
   interval: 500,
-  theme: null
+  theme: null,
+  ipSource: 0,
 }
 
 /*
@@ -111,10 +120,34 @@ const checkReqOptions = (reqOptions) => {
   return reqOptions
 }
 
+/**
+ * 功能描述：获取程序的 ipSource 配置值
+ * 参数说明：无
+ * 返回值：程序的 ipSource 配置值
+ * 注意事项：无
+ */
+const getIPSource = () => {
+  return settings.ipSource
+}
+
+/**
+ * 功能描述：获取程序的 ipSource 配置值
+ * 参数说明：无
+ * 返回值：程序的 ipSource 配置值
+ * 注意事项：无
+ */
+const setIPSource = (ipSource) => {
+  settings.ipSource = ipSource
+  return true
+}
+
+
 module.exports = {
   getSettings,
   updateProxySettings,
   updateReqSettings,
   checkReqOptions,
-  checkProxy
+  checkProxy,
+  getIPSource,
+  setIPSource
 }

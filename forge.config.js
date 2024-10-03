@@ -13,6 +13,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         // iconUrl: './build/icon.ico',
+        name: 'IP-Recorder',
         setupIcon: './build/icon.ico'
       }
     },

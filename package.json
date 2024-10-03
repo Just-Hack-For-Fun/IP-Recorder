@@ -1,6 +1,6 @@
 {
   "name": "IP-Recorder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "一个记录本机IP地址的程序",
   "main": "./dist/main/index.js",
   "author": "NOP Team",

@@ -108,6 +108,16 @@ const toggleTheme = (isDarkMode) => ipcRenderer.invoke('toggle-theme', isDarkMod
 // 获取主题
 const getThemeMode = async () => ipcRenderer.invoke('is-dark-mode')
 
+// 获取 IP 来源网站配置
+const getIPSource = async () => ipcRenderer.invoke('get-ip-source')
+
+// 测试 IP 来源网站配置
+const testIPSource = async (ipSource) => ipcRenderer.invoke('test-ip-source', ipSource)
+
+// 设置 IP 来源网站配置
+const setIPSource = async (ipSource) => ipcRenderer.invoke('set-ip-source', ipSource)
+
+
 contextBridge.exposeInMainWorld('setApi', {
   setProxy,
   getProxy,
@@ -115,5 +125,8 @@ contextBridge.exposeInMainWorld('setApi', {
   getReqOptions,
   setReqOptions,
   toggleTheme,
-  getThemeMode
+  getThemeMode,
+  getIPSource,
+  testIPSource,
+  setIPSource
 })

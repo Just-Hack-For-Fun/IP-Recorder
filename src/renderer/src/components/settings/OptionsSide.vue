@@ -14,6 +14,7 @@ import { h } from 'vue'
 import { NIcon } from 'naive-ui'
 import { ServerProxy as ProxySetting, ContentDeliveryNetwork } from '@vicons/carbon'
 import { DarkTheme20Filled as DarkMode } from '@vicons/fluent'
+import { TripOriginFilled } from '@vicons/material'
 
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) })
@@ -29,6 +30,11 @@ const menuOptions = [
     label: '代理设置',
     key: 'proxy-setting',
     icon: renderIcon(ProxySetting)
+  },
+  {
+    label: '数据接口',
+    key: 'ip-source-setting',
+    icon: renderIcon(TripOriginFilled)
   },
   {
     label: '请求设置',

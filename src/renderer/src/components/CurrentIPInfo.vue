@@ -9,6 +9,9 @@ let intervalId
 onMounted(() => {
   updateIP()
   intervalId = setInterval(updateIP, 30 * 1000) // 每30秒检查一次
+  window.api.onTriggerUpdateIP(() => {
+    updateIP()
+  })
 })
 
 onUnmounted(() => {
@@ -16,18 +19,18 @@ onUnmounted(() => {
 })
 
 const updateIP = async () => {
-  let result = await window.api.getCurrentIPInfo()
-  result = JSON.parse(result)
-  let ipInfo = result.ipinfo
-  let issame = result.issame
-  currentIP.value = ipInfo.ip ? ipInfo.ip : '未获取到IP'
-  location.value = ipInfo.location ? ipInfo.location : '未获取到IP归属地'
+  let ipInfo = await window.api.getCurrentIPInfo()
+  ipInfo = JSON.parse(ipInfo)
+  // let ipInfo = result.ipinfo
+  // let issame = result.issame
+  currentIP.value = ipInfo.ip || '未获取到IP'
+  location.value = ipInfo.location || '未获取到IP归属地'
 
-  if (!issame) {
-    warning.value = '结果不一致，以上为 ipip.net 返回的结果'
-  } else {
-    warning.value = ''
-  }
+  // if (!issame) {
+  //   warning.value = '结果不一致，以上为 ipip.net 返回的结果'
+  // } else {
+  //   warning.value = ''
+  // }
 }
 </script>
 
@@ -36,7 +39,7 @@ const updateIP = async () => {
     <div class="current-ip">{{ currentIP }}</div>
     <div class="ip-info-separator"></div>
     <div class="current-location">{{ location }}</div>
-    <div class="warning-message" v-if="warning">{{ warning }}</div>
+    <!-- <div class="warning-message" v-if="warning">{{ warning }}</div> -->
   </div>
 </template>
 
@@ -66,11 +69,11 @@ const updateIP = async () => {
   background-color: #ddd;
 }
 
-.warning-message {
+/* .warning-message {
   position: absolute;
   bottom: -20px;
   font-size: 10px;
   color: #888;
   text-align: center;
-}
+} */
 </style>
