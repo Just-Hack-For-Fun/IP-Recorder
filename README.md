@@ -7,22 +7,7 @@
 最近在练习 Electron 开发，于是开源了一款工具 —— `IP Recorder` 来解决这个问题
 
 
-
-## v1.1.0 版本更新日志
-
-> 2024-10-03
->
-> 修复程序一直获取IP地址的问题，这个问题的本质是 api.ipify.org  被封了，现在提供了多种选择，且提供了配置选项
->
-> <img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-121452.png" style="zoom:50%;" />
->
-> Windows 平台增加了自动创建桌面快捷方式
->
-> <img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-121534.png" style="zoom:50%;" />
->
-> 完善了配置功能，配置代理或者选择获取IP地址信息来源后，主页面显示当前IP信息处会实时更新
-
-
+<br>
 
 ## 下载地址 
 
@@ -31,87 +16,38 @@
 > https://github.com/Just-Hack-For-Fun/IP-Recorder
 
 
-
 **百度云盘**
 
 > https://pan.baidu.com/s/1oDTbTX1XWvsJ8TqSfJ46dQ?pwd=9vn7
 
 
+<br>
 
 ## 使用方法
 
-在 MacOS 中，打开程序会跳出下面的窗口，经过排查，应该是因为存储使用了 `electron-store` ，而这个库在 MacOS 上存储加密导致出现下面的提示，直接点击拒绝即可 
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-061755.png" alt="image-20240911141754863" style="zoom:50%;" />
-
 程序主页面如下：
 
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-062044.png" alt="image-20240911142043691" style="zoom:50%;" />
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2025-01-03-185352.png" alt="image-20250104025351265" style="zoom:50%;" />
 
-功能比较直观，左侧部分是控制开始、暂停、继续、停止的按钮，中间部分显示当前IP地址信息，右侧是设置以及导出结果
+功能比较直观，左侧显示IP信息，右侧是记录的控制按钮，最右侧为工具栏，可以点击设置按钮进入设置页面
+
+<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2025-01-03-185604.png" alt="image-20250104025604369" style="zoom:50%;" />
+
+
+
+设置页面可以进行相关配置
 
 本程序记录IP地址以及IP归属地使用的接口如下
 
 ```
-https://myip.ipip.net   // 默认接口
+https://myip.ipip.net/json
 https://api.ipify.org/?format=json  // 使用 https://ip.taobao.com 获取IP归属地
-https://webapi-pc.meitu.com/common/ip_location
+https://qifu-api.baidubce.com/ip/local/geo/v1/district
 http://demo.ip-api.com/json/?lang=zh-CN
 ```
 
-可以通过程序设置 -> 数据接口 进行配置
 
-
-
-目前程序可设置项如下
-
-**代理设置**
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122448.png" alt="image-20241003202447997" style="zoom: 50%;" />
-
-每次设置代理后，主页面的当前IP会立即刷新，记录结果会在 1 分钟内刷新
-
-
-
-**数据接口**
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122606.png" alt="image-20241003202605887" style="zoom:50%;" />
-
-目前第二个 (`ipify`) 被防火墙拦截，其他三个可直接使用，默认为第一个
-
-
-
-**请求设置**
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122704.png" alt="image-20241003202704519" style="zoom:50%;" />
-
-
-
-**主题模式**
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-10-03-122717.png" alt="image-20241003202717574" style="zoom:50%;" />
-
-
-
-程序运行后，会有一个托盘图标，这样即使不小心关闭了主窗口，也不会导致记录中断
-
-![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063515.png)
-
-
-
-程序每次开始时会检测是否存在之前的记录，根据实际情况可以选择继续记录或者开启新记录
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063600.png" alt="image-20240911143559659" style="zoom:50%;" />
-
-
-
-渗透测试等工作结束后，可以停止记录，导出结果（当然可以随时导出结果）
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-063712.png" alt="image-20240911143711689" style="zoom:50%;" />
-
-<img src="http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-065705.png" alt="image-20240911145704651" style="zoom:50%;" />
-
-
+<br>
 
 ## 手工编译
 
@@ -119,20 +55,16 @@ http://demo.ip-api.com/json/?lang=zh-CN
 
 ```bash
 npm i 
-npm run make 
+npm run build:mac   # 编译 MacOS 版本
+npm run build:win   # 编译 Windows 版本
+npm run build:linux # 编译 Linux 版本
 ```
 
-需要确保这两个命令执行环境可以访问 Github 等
+如果出现网络错误，可以考虑设置 npm 国内源
 
-最后一个命令执行后可能会报一个提示
+![image-20250104030222919](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2025-01-03-190223.png)
 
-![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-071948.png)
+之后在 dist 目录下就生成了打包好的程序
 
-这个错误不影响结果
-
-
-
-之后在 out 目录下就生成了打包好的程序
-
-![](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2024-09-11-072158.png)
+![image-20250104030249564](http://mweb-tc.oss-cn-beijing.aliyuncs.com/2025-01-03-190249.png)
 

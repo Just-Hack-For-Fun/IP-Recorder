@@ -1,0 +1,29 @@
+@mixin proxy-input {
+    border-radius: 2px;
+    border: 1px solid var(--proxy-input-border);
+    background: var(--proxy-input-bg);
+    // filter: blur(0.5px);
+
+    color: var(--set-content-text);
+
+    &:hover {
+        border: 1px solid #18a058;
+    }
+}
+
+@mixin indent-6px {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}
+
+@mixin my-hover {
+    &:hover {
+        // opacity: 0.8;
+        -webkit-user-drag: none;
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(var(--ctrl-bg), 0.1);
+        }
+    }
+}

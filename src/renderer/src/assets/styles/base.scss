@@ -1,0 +1,42 @@
+/* 重置所有元素的默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 重置列表样式 */
+li, ul, ol {
+    list-style: none;
+}
+
+/* 重置链接样式 */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 重置按钮样式 */
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* 重置输入框样式 */
+input, textarea {
+    outline: none;
+    border: none;
+}
+
+/* 设置根字体大小，方便使用 rem */
+html {
+    font-size: 16px;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+

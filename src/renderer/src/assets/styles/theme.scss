@@ -1,0 +1,79 @@
+:root {
+    // 浅色模式默认值
+    --bg: #ffffff;
+    --ip-addr-fill: #f58e6e;
+    --ip-addr-text: #fffafa;
+    --ip-location-fill: #ffd452;
+    --ip-location-text: #fffafa;
+    --ctrl-bg: rgba(229, 230, 233, 0.3);
+    --actions-bg: #2c2c2c;
+    --set-side-text: #2c2c2c;
+    --set-side-sep: #efeff4;
+    --set-menu-hover: #f3f3f5;
+    --set-menu-select: #ebf5ef;
+    --set-content-text: #2c2c2c;
+    --set-btn-text: #ffffff;
+    --proxy-border: #e5e5e5;
+    --proxy-bg: #ffffff;
+    --proxy-input-bg: #fdfdfd;
+    --proxy-select-bg: #fefefe;
+    --proxy-select-hover: #f3f3f5;
+    --proxy-input-border: #e5e5e5;
+    --set-test-btn: #f58e6e;
+    --set-save-btn: #ffd452;
+    --request-border: #e5e5e5;
+    --api-sep-line: #f4f4f4;
+    --api-card-bg: #ffffff;
+    --api-single-card-bg: #f5f7fa;
+    --api-single-card-text: #5E6D82;
+    --api-single-card-border: #E4E7ED;
+    --api-card-selected-bg: #F2F6FC;
+    --api-card-selected-text: #1989FA;
+    --api-card-selected-border: #D9ECFF;
+    --request-card-bg: #ffffff;
+    --theme-card-bg: #ffffff;
+    --confirm-box-bg: rgba(255, 255, 255, 0.60);
+    --confirm-box-shadow: rgba(0, 0, 0, 0.25);
+    --confirm-content-bg: #FFFFFF;
+    --confirm-content-border: #2C2C2C;
+
+}
+
+[data-theme='dark'] {
+    --bg: #2c2c2c;
+    --ip-addr-fill: #3a2e40;
+    --ip-addr-text: #a2b478;
+    --ip-location-fill: #a0333b;
+    --ip-location-text: #c6baa9;
+    --ctrl-bg: rgba(56, 59, 67, 0.3);
+    --actions-bg: #603d3d;
+    --set-side-text: #ffffff;
+    --set-side-sep: #3b3b3b;
+    --set-menu-hover: #1867bf;
+    --set-menu-select: #3b3b3b;
+    --set-content-text: #ffffff;
+    --set-btn-text: #ffffff;
+    --proxy-border: #292929;
+    --proxy-bg: rgba(56, 59, 67, 0.2);
+    --proxy-input-bg: rgba(56, 59, 67, 0.3);
+    --proxy-select-bg: rgba(56, 59, 67);
+    --proxy-select-hover: #2a2a2a;
+    --proxy-input-border: #514d4d;
+    --set-test-btn: #603234;
+    --set-save-btn: #28755d;
+    --request-border: #292929;
+    --api-sep-line: rgba(52, 52, 52, 0.9);
+    --api-card-bg: rgba(56, 59, 67, 0.3);
+    --api-single-card-bg: #2D2D2D;
+    --api-single-card-text: #E0E0E0;
+    --api-single-card-border: #404040;
+    --api-card-selected-bg: #2B3647;
+    --api-card-selected-text: #7EB9FF;
+    --api-card-selected-border: #1C2D46;
+    --request-card-bg: rgba(56, 59, 67, 0.2);
+    --theme-card-bg: rgba(56, 59, 67, 0.2);
+    --confirm-box-bg: rgba(0, 0, 0, 0.60);
+    --confirm-box-shadow: rgba(255, 255, 255, 0.25);
+    --confirm-content-bg: #2C2C2C;
+    --confirm-content-border: #FFFFFF;
+}
