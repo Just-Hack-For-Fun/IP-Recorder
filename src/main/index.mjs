@@ -14,10 +14,11 @@ const initialize = () => {
         optimizer.watchWindowShortcuts(window)
     })
 
-    MainWindow.create()
-    TrayManager.createTray()
     setupIPC()
     recorderController.init()
+    MainWindow.create()
+    TrayManager.createTray()
+
 }
 
 const setupAppEvents = () => {
